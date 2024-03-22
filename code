@@ -1,0 +1,70 @@
+import matplotlib.pyplot as plt
+
+REVIEW = "reviews.txt"
+POSITIVE = "positive_words.txt"
+NEGATIVE = "negative_words.txt"
+
+
+
+def main():
+    
+    positive_w  = []
+    negative_w = []
+    comment_r = []
+    
+    # Open file and put data into list 
+    # Get len of list and print out first three elements 
+    with open (POSITIVE, 'r') as positive_f:
+        for line in positive_f:
+            positive_w.append(line.strip())
+    print("Length of positive words:", len(positive_w))
+    print(positive_w[:3])
+    print("================================================================\n")
+    
+    # Open file and put data into list 
+    # Get len of list and print out first three elements 
+    with open (NEGATIVE, 'r') as negative_f:
+        for line in negative_f:
+            negative_w.append(line.strip())
+    print("Length of negative words:", len(negative_w))
+    print(negative_w[:3])
+    print("================================================================\n")
+    
+    # Open file and put data into list 
+    # Get len of list and print out first three elements        
+    with open (REVIEW, 'r') as review_f:
+        for line in review_f:
+            comment = line.strip().lower()
+            comment_r.append(comment.strip())
+
+
+    print("Length of comments", len(comment_r))
+    for i in range(3):
+        print(comment_r[i])
+    print("===============================================================\n")
+    print(comment_r[4])
+    
+    # Calculate sentiment score and put it in score list 
+    score_list = []    
+    with open (REVIEW, 'r') as review_f:
+        for line in review_f:
+            comment = line.strip().lower()
+            comment_r = comment.split()
+            score = 0
+            # calculate sentiment score 
+            for word in comment_r:
+                if word in positive_w:
+                    score += 1
+                if word in negative_w:
+                    score -= 1
+            score_list.append(score)
+        # Print sentiment score for the 5th comment 
+        print("The sentiment score for the 5th comment is", score_list[4])
+    
+    # Plot scores using histogram 
+    plt.hist(score_list)
+    plt.xlabel("Sentiment score")
+    plt.ylabel("Frequency")
+    plt.title("Sentiment score distribution")
+
+main()
